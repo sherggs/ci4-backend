@@ -34,7 +34,7 @@ class Coursework extends ResourceController
     {
         $model = new CourseModel();
         $data = $model->find(['id' => $id]);
-        if(!$data) return $this->failNotFound('404 not found ');
+        if(!$data) return $this->failNotFound('Student not found ');
         return $this->respond($data[0]);
     }
 
@@ -45,7 +45,8 @@ class Coursework extends ResourceController
      * @return mixed
      */
     public function create()
-    { helper(['form']);
+    { 
+        helper(['form']);
         $rules = [
             'name' => 'required',
             'course' => 'required',
@@ -79,7 +80,34 @@ class Coursework extends ResourceController
      */
     public function update($id = null)
     {
-        //
+        helper(['form']);
+        $rules = [
+            'name' => 'required',
+            'course' => 'required',
+            'number' => 'required' 
+
+
+        ];
+        $data = [
+            'name' => $this->request->getVar('name'),
+            'course' => $this->request->getVar('course'),
+            'number' => $this->request->getVar('number')
+
+        ];
+        if(!$this->validate($rules)) return $this->fail($this->validator->getErrors());
+        $model = new CourseModel();
+        $findbyid = $model->find(['id' => $id]);
+        if(!$findbyid) return $this->failNotFound(' Student not found ');
+
+        $model->update($id, $data);
+        $response = [
+            'status' => 200,
+            'error' => null,
+            'message'=> [
+                'success' => 'Student data updated'
+            ]
+        ];
+        return $this->respond($response);
     }
 
     /**
