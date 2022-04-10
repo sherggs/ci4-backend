@@ -117,6 +117,18 @@ class Coursework extends ResourceController
      */
     public function delete($id = null)
     {
-        //
+        $model = new CourseModel();
+        $findbyid = $model->find(['id' => $id]);
+        if(!$findbyid) return $this->failNotFound(' Student not found ');
+
+        $model->delete($id);
+        $response = [
+            'status' => 200,
+            'error' => null,
+            'message'=> [
+                'success' => 'Student deleted'
+            ]
+        ];
+        return $this->respond($response);
     }
 }
