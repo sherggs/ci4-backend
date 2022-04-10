@@ -1,8 +1,14 @@
 <?php
+// Student Name: Ademola Jegede,
+// Student ID: 2122998,
+// course: Web Technologies
+
 
 namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
+use CodeIgniter\API\ResponseTrait;
+use App\Models\CourseModel;
 
 class Coursework extends ResourceController
 {
@@ -11,9 +17,12 @@ class Coursework extends ResourceController
      *
      * @return mixed
      */
+    use ResponseTrait;
     public function index()
     {
-        //
+        $model = new CourseModel();
+        $data = $model->findAll();
+        return $this->respond($data);
     }
 
     /**
@@ -23,37 +32,44 @@ class Coursework extends ResourceController
      */
     public function show($id = null)
     {
-        //
+        $model = new CourseModel();
+        $data = $model->find(['id' => $id]);
+        if(!$data) return $this->failNotFound('404 not found ');
+        return $this->respond($data[0]);
     }
 
-    /**
-     * Return a new resource object, with default properties
-     *
-     * @return mixed
-     */
-    public function new()
-    {
-        //
-    }
-
+ 
     /**
      * Create a new resource object, from "posted" parameters
      *
      * @return mixed
      */
     public function create()
-    {
-        //
-    }
+    { helper(['form']);
+        $rules = [
+            'name' => 'required',
+            'course' => 'required',
+            'number' => 'required' 
 
-    /**
-     * Return the editable properties of a resource object
-     *
-     * @return mixed
-     */
-    public function edit($id = null)
-    {
-        //
+
+        ];
+        $data = [
+            'name' => $this->request->getVar('name'),
+            'course' => $this->request->getVar('course'),
+            'number' => $this->request->getVar('number')
+
+        ];
+        if(!$this->validate($rules)) return $this->fail($this->validator->getErrors());
+        $model = new CourseModel();
+        $model->save($data);
+        $response = [
+            'status' => 201,
+            'error' => null,
+            'message'=> [
+                'success' => 'new Student added'
+            ]
+        ];
+        return $this->respondCreated($response);
     }
 
     /**
