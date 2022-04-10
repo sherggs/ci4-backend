@@ -36,3 +36,8 @@ class Coursework extends Migration
         //
     }
 }
+
+// Student Name: Ademola Jegede,
+// Student ID: 2122998,
+// course: Web Technologies
+
