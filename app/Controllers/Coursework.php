@@ -49,13 +49,17 @@ class Coursework extends ResourceController
         helper(['form']);
         $rules = [
             'name' => 'required',
+            'email' => 'required|trim|valid_email',
             'course' => 'required',
-            'number' => 'required' 
+            'number' => 'required|trim|max_length[7]|min_length[7]' 
+
+
 
 
         ];
         $data = [
             'name' => $this->request->getVar('name'),
+            'email' => $this->request->getVar('email'),
             'course' => $this->request->getVar('course'),
             'number' => $this->request->getVar('number')
 
@@ -83,13 +87,17 @@ class Coursework extends ResourceController
         helper(['form']);
         $rules = [
             'name' => 'required',
+            'email' => 'required|trim|valid_email',
             'course' => 'required',
-            'number' => 'required' 
+            'number' => 'required|trim|max_length[7]|min_length[7]' 
+
+
 
 
         ];
         $data = [
             'name' => $this->request->getVar('name'),
+            'email' => $this->request->getVar('email'),
             'course' => $this->request->getVar('course'),
             'number' => $this->request->getVar('number')
 
