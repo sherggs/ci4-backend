@@ -18,6 +18,10 @@ class Coursework extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 200
             ],
+            'email' => [
+                'type' => 'VARCHAR',
+                'constraint' => 200
+            ],
             'course' => [
                 'type' => 'VARCHAR',
                 'constraint' => 200
